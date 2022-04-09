@@ -1,0 +1,420 @@
+
+a) creating active class in ternary operator
+b) by fetching data from the model and using ::all(), in the controller
+   we can run @foreach in .blade.php and get an access to all columns,
+   which will allow us to use that data in value={} attributes, <a></a> 
+   headers and etc
+c) use php functions to make code more advanced
+ 
+1. FACTORIES AND SEEDING
+
+-------------------------------------------------------------------------
+
+2. GUARD
+
+-------------------------------------------------------------------------
+
+3. FOLDERS STRUCTURE:
+
+// user's folders structure
+public -> panel -> assets -> css
+                          -> images
+                          -> js
+                          -> scss
+
+use laravel's folder structure in views                          
+
+// admin folders structure
+public -> backend -> css
+                  -> img
+                  -> js
+                  -> scss                          
+
+views -> admin -> auth: login.blade.php
+               -> admin_layouts.blade.php
+               -> home.blade.php
+
+4. app.blade.php - @yield('content') -> (using: @auth
+                                                else
+                                                @endauth; 
+
+                                                @guest
+                                                else
+                                                @endguest)
+
+In app.blade.php we load sections of the page: header section, 
+sidebar section,footer section. Except for dynamic content 
+section.                                                 
+
+// Example (app.blade.php):
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('public/panel/assets/css') }}">
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h3>
+                Ooops               // Header
+                <a href="{{route('')}}">Logout</a>   // Logout
+            </h3>
+        </div>
+    </div>
+</div>
+
+@guest
+
+@else
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h3 align="left">Sidebar</h3>  // Sidebar
+        </div>
+    </div>
+</div>
+
+@endguest
+
+@yield('content')                          // Content
+
+    <img src="{{ asset('public/panel/assets/images/pop.img') }}" alt="">
+
+    <script src="{{ asset('public/panel/assets/ront.js') }}"></script>
+</body>
+</html>
+
+
+login.blade.php will load into app.blade.php. It uses:
+                                              @extends('layouts.app')
+                                              @section('content')  
+                                              @endsection
+
+// Example (login.blade.php):
+
+@extends('layouts.app')
+
+@section('content')
+
+<div class="container" style="text-align: center">
+    <div class="row">
+        <div class="col-md-8">
+            <form action="" align="center" method="GET">
+                <input type="email" name="email"><br>
+                <input type="password" name="password"><br>
+                <input type="submit" value="Press">
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+
+register.blade.php will load into app.blade.php. It uses:
+                                              @extends('layouts.app')
+                                              @section('content')  
+                                              @endsection     
+
+// Example (register.blade.php):
+
+@extends('layouts.app')
+
+@section('content')
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <form action="" method="POST">
+                @csrf
+                <input type="text" name=""><br>
+                <input type="email" name=""><br>
+                <input type="password" name=""><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+
+Once you're logged in,                        It uses:
+home.blade.php will load                      @extends('layouts.app')
+into app.blade.php                            @section('content')  
+                                              @endsection 
+
+// Example (home.blade.php):
+
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-4" align="center">
+            <h1>This is the body</h1>
+        </div>  
+        <div class="col-md-4" align="center">
+            <h1>This is the body</h1>
+        </div> 
+        <div class="col-md-4" align="center">
+            <h1>This is the body</h1>
+        </div> 
+    </div>
+</div>
+@endsection
+
+--------------------------------------------------------------------------
+
+4. MIDDLEWARE
+
+a) <?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PracticeController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+
+Route::get('/practice',[PracticeController::class, 'index'])->
+middleware('learn');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+b) <?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+
+class LaravelPractice
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     */
+    public function handle(Request $request, Closure $next)
+    {
+        if ($request->learn <= 33){
+            return redirect('home');
+        } else {
+            return $next($request);
+        }
+    }
+}
+
+
+c) <?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class PracticeController extends Controller
+{
+
+    public function index(Request $request){
+        
+        return view('practice');
+    }
+
+}
+
+
+--------------------------------------------------------------------------
+
+5. SENDING MAIL (gmail)
+
+--------------------------------------------------------------------------
+
+6. GUARD
+
+--------------------------------------------------------------------------
+
+7. BLADE TEMPLATE FUNCTIONS
+
+{{ asset('') }}
+
+{{ route('') }}
+
+{{ url('') }}
+
+@yield('content')
+
+@extends('')
+
+@include
+
+@auth
+@else
+@endauth
+
+@guest
+@else
+@endguest
+
+@php
+@endphp
+
+@if
+@endif
+
+@foreach()
+@endforeach
+
+@error()
+@enderror
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------
+
+// Jetstream - Creating Admin Section: 
+                    (public -> backend -> assets -> css/images/js/scss)
+                           (views -> admin -> admin_master.blade.php
+                                           -> index.blade.php
+                                     admin -> body -> header.blade.php
+                                                   -> sidebar.blade.php
+                                                   -> footer.blade.php)
+   Jetstream - Creating Frontend Section: 
+                  (public -> frontend -> assets -> css/images/fonts/js)
+                        (views -> frontend -> main_master.blade.php
+                                           -> index.blade.php
+                                  frontend -> body -> header.blade.php
+                                                   -> footer.blade.php
+                                                   -> brands.blade.php)
+In master(s).blade.php you use @include(s) and @yield to separate and
+include parts of the page. In index(s).blade.php you use 
+@extends(master) and include dynamic body part with section &  
+endsection, and you point a route in web.php to this index.blade.php
+
+
+-----------------------------------------------------------------------------
+
+
+INFO
+
+1. VIEWS
+home.blade.php - when you're logged in, it displays
+                    home.blade.php
+
+2. MIGRATIONS
+Just think of a migration as a file that holds all
+the instructions for your database to create itself
+with
+
+3. MODEL
+Model represents a single row in a database. It is in
+charge of communicating with our table in a database
+
+4. REGISTER (Button)
+When we hit Register, we do post request back to the
+server with the data. Then the server validates the
+data, and then it comes back to us
+
+5. DATA
+Data needs to come from controller
+
+6.          !!!!  NAMING CONVENTIONS  !!!!
+Name your view folders as your Controller's names
+For example:
+    PersonController.php   --->   views/person(person folder)
+
+And name your particular view after controller's
+method's name
+For example:
+    index(method)   --->   index.blade.php(view file name)
+
+7. ROUTES ORDER
+Order of routes matters!!!
+
+8. ROUTES - /api/...
+You only have to specify api:
+<a href="/api/name-show/{{$name->id}}>Home</a>" in the views,
+redirect(), postman. You don't have to specify: /api/ in the
+controllers or in the 'routes' folder: api.php
+
+9. REQUEST & RESPONSE
+with GET: Route::get('', Controller::class, 'index); you get
+data from server
+with POST: Route::post('', Controller::class, 'index); you 
+post data to the server
+
+
+10. GUARD
+It tells Laravel that it has to use the login system or an
+authentication system for particular !!! User, or particular 
+model
+
+'guards' => [
+  'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+]
+
+admin guard who's provider is admins, which is admin model
+
+ 'providers' => [
+    'admins' => [
+                'driver' => 'eloquent',
+                'model' => App\Models\Admin::class,
+            ],
+ ]
+
+They're the definition of how the system should store and retrieve information about your users.
+
+You can find the configuration in your config/auth.php file. A web guard is the traditional cookie store - so that web guard instructs Laravel to store and retrieve session information the classic way. The API guard, on the other hand, uses tokens. So you would use the API guard if you want to authenticate users and requests using an API token in the header (bearer) or query parameter.
+
+You can also create your own guard if you wish, and there's also this good introductory blog post on the topic by Matt Stauffer.
+
+
+ 11. MIDDLEWARE
+ auth middleware - simply checks if the user is logged in or not, if the
+                  user is authenticated. If he's not, it redirects to
+                  the login page 
+
+guest middleware - if user is signed in, and is trying to access login or
+                   signup page he automaticaly will be redirected to the
+                   home page
+
+
+12. LOGOUT
+the log out route in Laravel is a post route, this means it needs to be 
+called using a form, and Laravel protects all forms from attacks using 
+the CSRF token. 

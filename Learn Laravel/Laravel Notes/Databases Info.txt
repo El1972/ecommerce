@@ -1,0 +1,9 @@
+
+ajax - it's a database for practicing making ajax(axios, fetch, 
+       XMLHttpRequest) calls from frontend to backend
+
+
+
+one_to_one - it's a database for practicing creating one-to-one 
+             relationships
+

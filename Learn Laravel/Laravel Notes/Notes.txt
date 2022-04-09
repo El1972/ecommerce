@@ -1,0 +1,59 @@
+
+1. If you want to create a folder in Controllers section, you can do it 
+   with command:
+
+   Important !!!   Use / instead of \
+
+   php artisan make:controller Backend/LayoutController
+
+
+
+2. In controller run  content.blade.php and not admin_layout.blade.php:
+   
+      public function index(){
+        return view('admin.content');
+    }
+
+    you're trying to display a content and not the whole admin file !!!
+
+
+
+3. In includes specify the path:
+
+   @include('admin.layout.sidebar')
+
+
+
+4. In layout parts: header.blade.php, sidebar.blade.php and
+   footer.blade.php you don't have to write:
+
+   @extends() & @section, @endsection structure
+   
+   meta tags and etc ...
+   with a ! (emmet) shortcut. Just write that element's code:
+
+   <footer>
+
+      etc ... 
+
+   </footer>
+
+
+   Now, if you have views that aren't being included in a master
+   layout with a @include() tag, unlike header, sidebar, footer,
+   then you have to use these tags:
+
+   @extends() & @section, @endsection
+
+   in order to display the structure of the page
+
+
+5. You don't have to create routes in web.php that already are
+   created by Laravel (in the: php artisan route:list). These are
+   default routes, so just use them
+
+
+
+6. To logout from page, logout uses GET method and a <a href=""></a> 
+   link. You have to create it in the default HomeController, with:  
+   Auth::logout()
