@@ -5,6 +5,8 @@ use App\Http\Controllers\Backend\ContentController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\ProductController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -62,11 +64,21 @@ Route::prefix('category')->group(function(){
 // Sub_SubCategory Routes
     Route::get('/sub/sub/view',[SubCategoryController::class, 'SubSubCategoryView'] )->name('all.subsubcategory');
     Route::get('/subcategory/ajax/{category_id}',[SubCategoryController::class, 'GetSubCategory'] );
+    Route::get('/sub-subcategory/ajax/{subcategory_id}',[SubCategoryController::class, 'GetSubSubCategory'] );
     Route::post('/sub/sub/store',[SubCategoryController::class, 'SubSubCategoryStore'] )->name('subsubcategory.store');
     Route::get('/sub/sub/edit/{id}',[SubCategoryController::class, 'SubSubCategoryEdit'] )->name('subsubcategory.edit');
     Route::post('/sub/sub/update',[SubCategoryController::class, 'SubSubCategoryUpdate'] )->name('subsubcategory.update');
     Route::get('/sub/sub/delete/{id}',[SubCategoryController::class, 'SubSubCategoryDelete'] )->name('subsubcategory.delete');
 
+});
+
+
+
+// Products
+
+Route::prefix('product')->group(function(){
+    Route::get('/add',[ProductController::class, 'AddProduct'] )->name('add-product');
+   
 });
 
 

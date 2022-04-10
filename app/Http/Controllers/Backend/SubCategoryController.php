@@ -173,4 +173,13 @@ class SubCategoryController extends Controller
 
     }
 
+
+
+
+    public function GetSubSubCategory($subcategory_id){
+
+
+
+    }
+
 }
