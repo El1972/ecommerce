@@ -1,0 +1,1647 @@
+
+BOOTSTRAP CDN
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+    crossorigin="anonymous">
+
+Methods & Properties Often Used:
+
+with
+when
+compact
+session
+flash
+attach
+redirect
+request
+validate
+get
+all
+find
+findOrFail
+fillable
+Post::create()
+request()
+$this->call()
+User::factory()
+DB::table('users')->insert([])
+'password' => Hash::make('kkfrtv')
+@csrf
+{{ config() }}
+{{ asset('js/app.js') }}
+{{ csrf_token }}
+html lang="{{ str_replace( app->getLocale()) }}"
+@yield('content')
+$table->string('email')->unique() ( it is on
+        the database level)
+public function index(Request $request){
+        $request->input('distance');
+        }
+href="{{ url('/') }}"
+action="{{ route('register') }}"
+value="{{ old('username') }}"
+validate()
+'unique:users' - means you can't register with
+            the same email, name etc ... in
+            Controllers\Auth\RegisterController.php
+public function index($user){  <-- from contrler
+
+    User::find($user) - we're pulling a data(one row)
+                from the database
+
+    return view('home', [
+        'user' => $user,
+       ])
+    }
+  }
+
+{{ $user->username }} - passing data to a view
+belongsTo()
+protected $guarded = [] (in the Model)
+The filled function determines whether the given value is not "blank": true or false
+
+    filled(0);
+    filled(true);
+    filled(false);
+
+    // true
+
+    filled('');
+    filled('   ');
+    filled(null);
+    filled(collect());
+
+    // false
+
+Gate::allows('admin-only', auth()->user())
+@if($errors->any())
+
+        @foreach($errors->all() as $error)
+
+                     {{ $error }}
+
+        @endforeach
+     @endif
+
+value="{{ old('name') ?? $user->profile->name }}" - in a view
+$this->authorize('update', $user->profile);
+@can('update', $user->profile)
+        <a href="/profile/{{ $user->id }}/edit">Edit Profile</a@endcan
+@auth
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="">Posts</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="">Categories</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-8">
+                        @yield('content')
+                    </div>
+                </div>
+
+            </div>
+    @else
+                    @yield('content')
+
+    @endauth
+<a href="{{ route('categories.create') }}" class="btn btn-success">Add Category</a>
+session()->flash('success','Category created succesfuly' );
+    $this->validate($request, [
+                'name' => 'required|unique:categories'
+            ]);
+@if(session()->has('success'))
+        <div class="alert alert-success">
+            {{ session()->get('success') }}
+        </div>
+    @endif
+
+
+
+
+
+            L A R A V E L   C O M M A N D S   A N D   P I E C E S   O F   C O D E
+
+
+
+1) CREATE LARAVEL PROJECT
+
+composer create-project laravel/laravel   name...
+
+cd into   name...
+
+composer require laravel/ui
+
+// General basic scaffolding...
+php artisan ui bootstrap
+php artisan ui react 
+php artisan ui vue 
+
+// General login / registration scaffolding...
+php artisan ui bootstrap --auth
+php artisan ui react --auth
+php artisan ui vue --auth
+
+then: 
+
+npm install && npm run dev
+
+create database first !!!
+php artisan migrate
+
+
+OLD WAY:
+Install Composer first!!!   (See the video in Composer
+folder, how to install it)
+
+After you installed Composer globally run this command:
+
+composer global require laravel/installer
+
+Then run this command in order to initialize Laravel:
+
+export PATH="$PATH:$HOME/.composer/vendor/bin"
+
+Then type:
+
+laravel
+
+and it should appear with its list of commands.
+Once it does, then name and create your project,
+for example:
+
+laravel new elhanproject
+
+
+
+
+
+2) LARAVEL COMMANDS
+
+PATH=${PATH}:/usr/local/mysql/bin/
+then type:
+mysql -u root -p;
+
+create database mydata;   <--- don't forget semicolon at the end, important
+drop database mydata;
+show databases;
+php artisan make:model Post -m  (create a model (singular!!!), and migration)
+php artisan make:controller PostsController
+php artisan make:model Post
+php artisan make:migration create_post_table
+php artisan migratemysql
+
+------ 
+!!! php artisan migrate:fresh - is used when we want a fresh or new 
+installation of our database. It deletes all the existing tables of 
+the database and runs the migrate command. It will erase everything and create 
+everything again. It rolls back and runs migration again
+
+php artisan migrate:refresh - is a two in one command that 
+executes the :rollback command and the migrate command !!! 
+
+php artisan migrate:refresh --seed 
+------
+
+use mydata (name of the database);
+show tables;
+desc posts (name of the table);
+select * from posts;
+php artisan route:list
+
+---------------------------------------
+php artisan migrate:install (which migration you have or heven't run)
+p. a. m.:reset (calls 'down' method inside of migration: roll back)
+p. a. m.:rollback (undoes migration; It drops: create_users_table,
+    create_password_resets_table, and your current migration for
+    example: create_todos_table)
+p. a. m.:rollback --step=2 (rolls back last 2 migration)
+p. a. m.:refresh (rolls back every db mig. making it available. Same as reset)
+---------------------------------------
+
+
+
+
+
+3) INTEGRATING WITH REACT & LOGIN WITH REGISTER
+
+composer require laravel/ui
+php artisan ui react --auth
+php artisan ui react
+php artisan ui:auth
+npm install
+npm run dev
+mix.js('resources/js/app.js', 'public/js')
+   .react();
+
+!!! Remember: First run: npm run dev in the terminal, and after that run: php artisan
+serve in the next terminal. It has to go through: npm run dev in order for component
+to have an effect !!!
+
+Once installed, add css to webpack.mix.js file.
+It'll look like this:
+
+mix.js('resources/js/app.js', 'public/js')
+    .react()
+    // .sass('resources/sass/app.scss', 'public/css');
+
+
+in order to inject a React component into a Laravel's view
+
+First.js (React Component)
+
+import React from "react";
+import ReactDOM from "react-dom";
+import {Route, BrowserRouter as Menu, Switch} from "react-router";
+import {Link} from "react-router-dom";
+
+const First = () => {
+
+    return (
+        <div>
+            <h1>Hello Pools</h1>
+        </div>
+        )
+    }
+
+export default First;
+
+if (document.getElementById('app')) {
+    ReactDOM.render(<First />, document.getElementById('app'));
+}
+
+
+app.js
+
+ * First we will load all of this project's JavaScript dependencies which
+ * includes React and other helpers. It's a great starting point while
+ * building robust, powerful web applications using React + Laravel.
+ */
+require('./bootstrap');
+require('/css/app.css'); - it works, but everyone includes it in a view
+
+/**
+ * Next, we will create a fresh React component instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+require('./components/First');
+
+
+and in a Laravel's view it renders:
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="/css/app.css">
+
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app"></div>
+
+        <script src="{{asset('/js/app.js')}}"></script>
+</body>
+</html>
+
+
+For css to work we have to put our styles into app.css in a public folder
+
+
+And everytime you make a change first you'll have to run:
+
+'npm run dev'
+
+and then:
+
+'php artisan serve', in order to see the changes
+
+or
+
+npm run watch (first)
+
+and then in a new terminal
+
+php artisan serve
+
+------------------------------------------------------------------
+
+!!! Also, don't forget to change file name in app.js:
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes React and other helpers. It's a great starting point while
+ * building robust, powerful web applications using React + Laravel.
+ */
+
+require('./bootstrap');
+
+/**
+ * Next, we will create a fresh React component instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+
+require('./components/Example');
+
+ to the component's name. For example from Example to Page
+
+ require('./components/Page');
+
+ 
+
+
+GETTING DATA WITH REACT COMPONENT FROM LARAVEL'S VIEW & DISPLAYING IT
+
+web.php
+
+        use Illuminate\Support\Facades\Route;
+        use John\Http\Controllers\TodosController;
+        use John\Http\Controllers\CountController;
+        /*
+        |--------------------------------------------------------------------------
+        | Web Routes
+        |--------------------------------------------------------------------------
+        |
+        | Here is where you can register web routes for your application. These
+        | routes are loaded by the RouteServiceProvider within a group which
+        | contains the "web" middleware group. Now create something great!
+        |
+        */
+
+        Route::get('/', [CountController::class, 'index']);
+
+
+CountController.php
+
+        namespace John\Http\Controllers;
+
+        use Illuminate\Http\Request;
+        use John\Models\Count;
+
+        class CountController extends Controller
+        {
+
+            public function index(){
+
+                $counts = Count::all();
+                return view('counts.count')->with('counts', $counts);
+
+            }
+
+        }
+
+Connect.js
+
+        import React, {useState, useEffect} from "react";
+        import ReactDOM from "react-dom";
+        import {Route, BrowserRouter as Menu, Switch} from "react-router";
+        import {Link} from "react-router-dom";
+        import axios from "axios";
+
+        const Connect = (props) => {
+
+        useEffect(()=>{
+            axios.put(`http://127.0.0.1:8000/`
+            ).then(res => {
+                console.log(res)
+            })
+        })
+
+            return (
+                <div>
+                </div>
+            )
+        }
+
+        if (document.getElementById('root')) {
+            const me = document.getElementById('root');
+            const el = me.getAttribute('data');
+            ReactDOM.render(<Connect el={el}/>,document.getElementById('root') );
+
+        }
+
+
+count.blade.php
+
+        <!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport"
+                  content="width=device-width, user-scalable=no, initial-scale=1.0,
+                  maximum-scale=1.0, minimum-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>Document</title>
+        </head>
+        <body>
+        @foreach($counts as $count)
+            <div id="root" data="{{ $count->number }}">
+            </div>
+        @endforeach
+            <script src="/js/app.js"></script>
+        </body>
+        </html>
+
+
+
+
+
+4) ELOQUENT - ORM
+   php artisan make:model Car -m
+   php artisan make:controller CarsController --resource (CRUD: show, del. upd.)
+   Route::resource('/', CarsController::class);   <--- in the routes: web.php
+   php artisan route:list
+
+
+
+                                 ONE TO MANY
+
+We can have one car, and that one specific car has many models
+
+TABLE: Cars
+ID    Name         Founded     Description
+1     Audi           1932      Fast car...
+2     Mercedes       1926      Famous car...
+3     BMW            1916      German car...
+
+
+id    Car_id        Model_name       Timestamps
+1        1               A1              NOW
+2        1               A3              NOW
+
+
+
+    Schema::create('cars', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->integer('year');
+            $table->string('color');
+            $table->longText('description');
+            $table->timestamps();
+        });
+
+        Schema::create('car_models', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('car_id');
+            $table->string('model_name');
+            $table->timestamps();
+            $table->foreign('car_id')->references('id')
+                ->on('cars')->onDelete('cascade' /* set null */);
+        });
+
+Car.php:
+namespace Main\Models;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Car extends Model
+{
+    use HasFactory;
+
+    protected $table = 'cars';
+
+    protected  $primaryKey = 'id';
+
+    public function carModels(){
+        return $this->hasMany(CarModel::class);
+    }
+}
+
+CarModel.php:
+namespace Main\Models;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class CarModel extends Model
+{
+    use HasFactory;
+
+    protected $table = 'car_models';
+
+    protected  $primaryKey = 'id';
+
+    public function car(){
+        return $this->belongsTo(Car::class);
+    }
+}
+
+car.blade.php
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,
+          minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+@foreach($cars as $car)
+
+    @forelse($car->carModels as $model)
+        {{ $model['model_name'] }}
+    @empty
+        <p>
+            nothing
+        </p>
+    @endforelse
+
+@endforeach
+
+</body>
+</html>
+
+
+14)...
+namespace Main\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Car extends Model
+{
+    use HasFactory;
+
+    protected $table = 'cars';
+
+    protected  $primaryKey = 'id';
+
+    public function carModels(){
+        return $this->hasMany(CarModel::class);
+    }
+
+    public function headquarter(){
+        return $this->hasOne(Headquarter::class);
+    }
+
+    public function engines() {
+        return $this->hasManyThrough(
+            Engine::class, CarModel::class,
+             'car_id', // foreign key on CarModel table
+             'model_id' // foreign key on Engine table
+        );
+    }
+}
+
+
+                                MANY TO MANY
+
+
+4) QUERY BUILDER
+in the Controller:
+example of using our own queries
+$posts = DB::select('select from posts WHERE id = :id', ['id' = 7]);
+print_r($posts);   (or dd($posts))
+
+example of qury builder. We're building a query from the table
+$id = 7;
+$posts = DB::table('posts')->where('id', $id)->get();
+
+getting a specific column
+$id = 7;
+$posts = DB::table('posts')->select('body')->get(); (selects all the columns)
+
+...
+
+inserting
+$id = 6;
+$posts = DB::table('posts')->insert([
+    'title' => 'New Post',
+    'body' => 'New Body'
+]);
+
+print_r($posts);
+
+mysql(terminal): select * from posts;  (to see inserted fields)
+
+
+
+updating
+$id = 4;
+$posts = DB::table('posts')->where('id', '=', 15)->update([
+    'title' => 'New Title',
+    'body' => 'Updated Body'
+])
+
+print_r($posts);
+
+mysql(terminal): select * from posts;  (to see inserted fields)
+
+
+
+deleting
+$id = 5;
+$posts = DB::table('posts')->where('id', '=', 13)->delete();
+
+print_r($posts);
+
+mysql(terminal): select * from posts;  (to see inserted fields)
+
+
+----------------------------------------------------------------------------------
+
+
+5) FACTORY MODEL & SEEDER
+   insert into posts (title, body) values ('first one', 'my body');
+   select * from posts;
+   php artisan make:factory PostFactory   (creates factory)
+   php artisan make:factory PostFactory --model=Post
+   php artisan make:seed PostSeeder
+   php artisan make:seeder PostSeeder
+   php artisan db:seed
+   php artisan migrate:fresh --seed (deletes all the tables & databases
+                                        and reseedes fresh)
+
+   php artisan tinker
+   \Main\Models\Post::factory()->create();   (creates one row with dummy data)
+   \Main\Models\Post::factory()->count(3)->create();   (creates three rows)
+
+
+TodosFactory.php
+
+namespace Database\Factories;
+
+use Main\Models\Todo;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class TodoFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Todo::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->sentence(3),
+            'description' => $this->faker->paragraph(5),
+            'complete' => false
+        ];
+    }
+}
+
+
+TodosSeeder.php
+
+namespace Database\Seeders;
+
+use Main\Models\Todo;
+use Illuminate\Database\Seeder;
+
+class TodosSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        Todo::factory()->times(10)->create();
+    }
+}
+
+
+DatabaseSeeder.php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        // \Main\Models\User::factory(10)->create();
+        $this->call(TodosSeeder::class);
+    }
+}
+
+
+---------------------------------------------------------------------
+
+READY TO GO TABLES WITH DUMMY DATA
+
+insert into lesson(name, age, description) VALUES ('John', 72, 'Learned to compose');
+insert into lesson(name, age, description) VALUES ('Elkhan', 48, 'Learned to solo');
+insert into lesson(name, age, description) VALUES ('Paul', 71, 'Learned to play bass');
+insert into lesson(name, age, description) VALUES ('Ringo', 74, 'Learned to drum');
+
+
+insert into methods(name, year, color, description) VALUES ('Audi', 1987, 'Black', 'My first real car');
+insert into methods(name, year, color, description) VALUES ('BMW', 1966, 'Green', 'Great German car');
+insert into methods(name, year, color, description) VALUES ('Ford', 1929, 'Red' , 'Works like a mule');
+insert into methods(name, year, color, description) VALUES ('Jaguar', 1886, 'Beige', 'English pride');
+insert into methods(name, year, color, description) VALUES ('Buick', 1903, 'White', 'Comfy seats');
+
+insert into cars(name, founded, description) VALUES ('Audi', 1987, 'My first real car');
+insert into cars(name, founded, description) VALUES ('BMW', 1966, 'Great German car');
+insert into cars(name, founded, description) VALUES ('Ford', 1929, 'Works like a mule');
+insert into cars(name, founded, description) VALUES ('Jaguar', 1886, 'English pride');
+insert into cars(name, founded, description) VALUES ('Buick', 1903, 'Comfy seats');
+
+insert into headquarters (car_id, headquarters, country) VALUES (1, 'Ingulstadt', 'Germany')
+
+insert into engines (model_id, engine_name) VALUES (1, '1.2 TSFI');
+insert into engines (model_id, engine_name) VALUES (1, '1.2 TSFI 122');
+insert into engines (model_id, engine_name) VALUES (1, '1.2 TSFI 140');
+insert into engines (model_id, engine_name) VALUES (2, '1.2 TSFI 185');
+insert into engines (model_id, engine_name) VALUES (3, '2.0 TDI');
+
+insert into car_production_dates(model_id, created_at) VALUES (1, '2007/06/27');
+insert into car_production_dates(model_id, created_at) VALUES (2, '1998/12/05');
+insert into car_production_dates(model_id, created_at) VALUES (3, '2012/10/30');
+
+insert into products(name, slug, description, image_name, price, sale_price) VALUES ('Luxurious Watch', 'luxurious-watch', '<li><i class="icofont-check"></i> Crown Protector</li><li><i class="icofont-check"></i> Water Resistance</li><li><i class="icofont-check"></i> Movement Button</li><li><i class="icofont-check"></i> 1 Year Guarantee</li>', 'watch-3.png', 250, 120);
+insert into products(name, slug, description, image_name, price, sale_price) VALUES ('Pink Tores Watch', 'pink-trex-watch', '<li><i class="icofont-check"></i> Stainless Steel</li><li><i class="icofont-check"></i> High Quality Glass</li><li><i class="icofont-check"></i> 3 Step Protection</li><li><i class="icofont-check"></i> 2 Year Guarantee</li>', 'watch-2.png', 390, 250);
+insert into products(name, slug, description, image_name, price, sale_price) VALUES ('New YellowWatch', 'new-yellow-watch', '<li><i class="icofont-check"></i> 2 Step Protection Glass</li><li><i class="icofont-check"></i> PVD Coating</li><li><i class="icofont-check"></i> Clear Super Glass</li><li><i class="icofont-check"></i> 3 Year Guarantee</li>', 'watch-1.png', 550, 330 );
+insert into products(name, slug, description, image_name, price, sale_price) VALUES ('Brand New Black', 'brand-new-watch', '<li><i class="icofont-check"></i> Lifetime Battery</li><li><i class="icofont-check"></i> Awesome Color</li><li><i class="icofont-check"></i> Water Resistance</li><li><i class="icofont-check"></i> 1 Year Guarantee</li>', 'watch-4.png', 390, 180);
+
+insert into cars(name, founded, description) VALUES ('Audi', 1987, 'My first real car');
+insert into cars(name, founded, description) VALUES ('Ford', 1859, 'Great car to drive');
+insert into cars(name, founded, description) VALUES ('BMV', 1893, 'Comfort amazes me in it');
+insert into cars(name, founded, description) VALUES ('Jaguar', 1926, 'Very stylish English car');
+
+insert into car_models (car_id, model_name) VALUES(2, 'B1');
+insert into car_models (car_id, model_name) VALUES(2, 'B2');
+insert into car_models (car_id, model_name) VALUES(2, 'B3');
+------------------------------------------------------------------------
+
+Create Insertion Into A Table Here: ...
+
+insert into parts(guitar_id, strings) VALUES (1, 'picalo');
+insert into humans(type) VALUES ('women');
+insert into humans(type) VALUES ('trans');
+
+insert into cars(name, founded, description) VALUES ('Mercedes', 1926, 'This is my Mercedes');
+
+insert into extensions(emails_id, email_type) VALUES (5, 'dual');
+
+insert into man_models(man_id, hair) VALUES (1, 'Blonde');
+
+insert into man_models (car_id, model_name) VALUES(1, 'A1');
+insert into car_models (car_id, model_name) VALUES(1, 'A2');
+insert into car_models (car_id, model_name) VALUES(1, 'A3');
+
+
+
+                                                RELATIONSHIPS:
+
+insert into users (name, email, password) VALUES ('John', 'lennon@gmail.com', '');
+insert into users (name, email, password) VALUES ('Paul', 'mccartney@ru.com', '');
+insert into users (name, email, password) VALUES ('George', 'harrison@ru.com', '');
+insert into users (name, email, password) VALUES ('Ringo', 'starr@yahoo.com', '');
+insert into users (name, email, password) VALUES ('Mick', 'jagger@gmail.com', '');
+insert into users (name, email, password) VALUES ('Keith', 'richards@ru.com', '');
+insert into users (name, email, password) VALUES ('Brian', 'jones@gmail.com', '');
+insert into users (name, email, password) VALUES ('Bill', 'wyman@hotmail.com', '');
+insert into users (name, email, password) VALUES ('Charlie', 'watts@gmail.com', '');
+insert into users (name, email, password) VALUES ('George', 'martin@gmail.com', '');
+
+insert into profiles (user_id, phone, city, post_code, country) VALUES (1, '212-765-763', 'New York', 11003, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (2, '917-174-4512', 'Newark', 00653, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (3, '623-195-1812', 'Miami', 06743, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (4, '067-121-2855', 'Texas', 87342, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (5, '317-070-9901', 'Santa Fe', 34277, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (6, '118-251-0805', 'Boston', 56734, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (7, '423-111-2890', 'Las Vegas', 70965, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (8, '645-444-0412', 'Austin', 34598, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (9, '534-232-8085', 'New York', 90965, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (10, '732-199-4121', 'Bronx', 10033, 'USA');
+
+insert into profiles (user_id, phone, city, post_code, country) VALUES (1, '212-765-763', 'New York', 11003, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (1, '917-174-4512', 'Newark', 00653, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (1, '623-195-1812', 'Miami', 06743, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (2, '067-121-2855', 'Texas', 87342, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (2, '317-070-9901', 'Santa Fe', 34277, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (3, '118-251-0805', 'Boston', 56734, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (3, '423-111-2890', 'Las Vegas', 70965, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (3, '645-444-0412', 'Austin', 34598, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (4, '534-232-8085', 'New York', 90965, 'USA');
+insert into profiles (user_id, phone, city, post_code, country) VALUES (4, '732-199-4121', 'Bronx', 10033, 'USA');
+
+insert into roles (musician, developer) VALUES ('guitarist', 'java');
+insert into roles (musician, developer) VALUES ('drummer', 'php');
+insert into roles (musician, developer) VALUES ('singer', 'css');
+insert into roles (musician, developer) VALUES ('pianist', 'html');
+insert into roles (musician, developer) VALUES ('bassist', 'react');
+insert into roles (musician, developer) VALUES ('percussionist', 'python');
+insert into roles (musician, developer) VALUES ('banjoist', 'javascript');
+insert into roles (musician, developer) VALUES ('keyboardist', 'perl');
+insert into roles (musician, developer) VALUES ('vocalist', 'laravel');
+insert into roles (musician, developer) VALUES ('saxophonist', 'django');
+
+insert into role_user (user_id, role_id) VALUES (2, 4);
+insert into role_user (user_id, role_id) VALUES (4, 2);
+insert into role_user (user_id, role_id) VALUES (5, 8);
+insert into role_user (user_id, role_id) VALUES (1, 9);
+insert into role_user (user_id, role_id) VALUES (10, 1);
+insert into role_user (user_id, role_id) VALUES (6, 6);
+insert into role_user (user_id, role_id) VALUES (3, 7);
+
+                                        END OF RELATIONSHIPS
+
+
+
+insert into men(name, description, number) VALUES ('John', 'Learned to compose', 1);
+insert into men(name, description, number) VALUES ('Paul', 'Played bass', 3);
+insert into men(name, description, number) VALUES ('George', 'Lead guitar', 2);
+insert into men(name, description, number) VALUES ('Ringo', 'Played drums', 6);
+
+insert into flights(name, destination, active, number, canceled, departed, arrived_at) VALUES ('qatar', 'Baku', 0, 0, 0, 0, 0);
+insert into flights(name, destination, active, number, canceled, departed, arrived_at) VALUES ('qatar', 'Baku', 0, 1, 0, 1, 0);
+insert into flights(name, destination, active, number, canceled, departed, arrived_at) VALUES ('azal', 'Baku', 1, 0, 1, 0, 0);
+insert into flights(name, destination, active, number, canceled, departed, arrived_at) VALUES ('virgin', 'Rome', 0, 0, 1, 0, 1);
+
+insert into products(name, file_path, description, price) VALUES ('Volvo', 'european', 'Luxurious Baby', 48000);
+
+insert into products(name) VALUES ('Electric Vehicles');
+insert into products(name) VALUES ('Automobiles');
+insert into products(name) VALUES ('Luxury Cars');
+
+insert into car_product(car_id, product_id) VALUES (1, 2);
+insert into car_product(car_id, product_id) VALUES (1, 3);
+
+
+                                                    TABLE FOR QUERIES
+
+insert into people (name, email, city, age, instrument, is_active) VALUES ('John', 'lennon@gmail.com', 'London', 40, 'Guitar', 0 );
+insert into people (name, email, city, age, instrument, is_active) VALUES ('Paul', 'mccartney@ru.com', 'Liverpool', 79, 'Piano', 1 );
+insert into people (name, email, city, age, instrument, is_active) VALUES ('George', 'harrison@ru.com', 'Los Angeles', 58, 'Sitar', 0);
+insert into people (name, email, city, age, instrument, is_active) VALUES ('Ringo', 'starr@yahoo.com', 'Montecarlo', 80, 'Drums', 1 );
+insert into people (name, email, city, age, instrument, is_active) VALUES ('Mick', 'jagger@gmail.com', 'Paris', 78, 'Singer', 1 );
+insert into people (name, email, city, age, instrument, is_active) VALUES ('Keith', 'richards@ru.com', 'Connecticut', 81, 'Acoustic', 1 );
+insert into people (name, email, city, age, instrument, is_active) VALUES ('Brian', 'jones@gmail.com', 'Hartfordshire', 27, 'Flute', 0 );
+insert into people (name, email, city, age, instrument, is_active) VALUES ('Bill', 'wyman@hotmail.com','London', 82, 'Bass', 1 );
+insert into people (name, email, city, age, instrument, is_active) VALUES ('Charlie', 'watts@gmail.com', 'New York', 80, 'Percussion', 0);
+insert into people (name, email, city, age, instrument, is_active) VALUES ('Martin', 'martin@gmail.com', 'Boston', 69, 'Clavisin', 0);
+
+                                                    END OF TABLE FOR QUERIES
+
+
+insert into todos(name, description, completed) VALUES ('Keith', 'Great Solo Guitarist', 0);
+insert into todos(name, description, completed) VALUES ('Brian', 'Multi Instrumentalist', 0);
+insert into todos(name, description, completed) VALUES ('Martin', 'Famous Producer', 0);
+insert into todos(name, description, completed) VALUES ('Charlie', 'Kick Ass Drummer', 0);
+insert into todos(name, description, completed) VALUES ('Bill', 'Great bass player', 1);
+insert into todos(name, description, completed) VALUES ('Andrew', 'Talented manager', 0);
+insert into todos(name, description, completed) VALUES ('Mick', 'Legendary singer', 1);
+
+insert into people(name, number, description) VALUES ('Audi', 1987, 'My first real car');
+insert into people(name, number, description) VALUES ('Ford', 1859, 'Great car to drive');
+insert into people(name, number, description) VALUES ('BMV', 1893, 'Comfort amazes me in it');
+insert into people(name, number, description) VALUES ('Jaguar', 1926, 'Very stylish English car');
+
+----------------------------------------------------------------------------------
+
+
+9) SEEDER
+php rtisan make:seeder PostTableSeeder
+composer dump-autoload
+php artisan db:seed
+
+
+----------------------------------------------------------------------------------
+
+
+10) API
+composer require laravel/passport
+php artisan migrate;  (we're migrating automatically created tables)
+php artisan passport:install
+
+'https://www.reddit.com/r/MechanicalKeyboards.json'
+
+
+----------------------------------------------------------------------------------
+
+
+11) TINKER
+php artisan tinker
+and then: User::all() - to see all users
+
+
+----------------------------------------------------------------------------------
+
+
+12) pulling data from database and displaying in view
+    with 3 different methods:
+1)    a. use Illuminate\Support\Facades\Route;
+       use Main\Http\Controllers\CarController;
+
+       Route::resource('/{id}', CarController::class);
+
+       Auth::routes();
+
+       Route::get('/home', [Main\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+    b. namespace Main\Models;
+
+       use Illuminate\Database\Eloquent\Factories\HasFactory;
+       use Illuminate\Database\Eloquent\Model;
+
+       class Car extends Model
+       {
+           use HasFactory;
+
+           protected $table = 'cars';
+
+           protected  $primaryKey = 'id';
+
+       //    public $timestamps = true;         (optional)
+       //
+       //    protected  $dateFormat = 'h:m:s';   (optional)
+       }
+
+    c. namespace Main\Http\Controllers;
+
+       use Main\Models\Car;
+       use Illuminate\Http\Request;
+
+       class CarController extends Controller
+       {
+        public function index($id)
+           {
+               return view('car', [
+                   'id' => Car::all()->find($id)
+               ]);
+           }
+           }
+
+    d. <!doctype html>
+       <html lang="en">
+       <head>
+           <meta charset="UTF-8">
+           <meta name="viewport"
+                 content="width=device-width, user-scalable=no, initial-scale=1.0,
+                 maximum-scale=1.0, minimum-scale=1.0">
+           <meta http-equiv="X-UA-Compatible" content="ie=edge">
+           <title>Document</title>
+       </head>
+       <body>
+           {{ $id->year }}
+       </body>
+       </html>
+
+2)  a. use Illuminate\Support\Facades\Route;
+          use Main\Http\Controllers\CarController;
+
+          Route::resource('/{id}', CarController::class);
+
+          Auth::routes();
+
+          Route::get('/home', [Main\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+       b. namespace Main\Models;
+
+          use Illuminate\Database\Eloquent\Factories\HasFactory;
+          use Illuminate\Database\Eloquent\Model;
+
+          class Car extends Model
+          {
+              use HasFactory;
+
+              protected $table = 'cars';
+
+              protected  $primaryKey = 'id';
+
+          //    public $timestamps = true;         (optional)
+          //
+          //    protected  $dateFormat = 'h:m:s';   (optional)
+          }
+
+       c. namespace Main\Http\Controllers;
+
+          use Main\Models\Car;
+          use Illuminate\Http\Request;
+
+          class CarController extends Controller
+          {
+              public function index()
+              {
+                 $cars = Car::all();
+
+                // $cars = Car::where('name', '=', 'Jaguar')
+                //            ->get();   <-- to get a specific value
+
+                 return view('car', [
+                     'cars' => $cars
+                 ]);
+              }
+           }
+
+       d. <!doctype html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport"
+                    content="width=device-width, user-scalable=no, initial-scale=1.0,
+                    maximum-scale=1.0, minimum-scale=1.0">
+              <meta http-equiv="X-UA-Compatible" content="ie=edge">
+              <title>Document</title>
+          </head>
+          <body>
+              @foreach($cars as $car)
+                  <h1>{{ $car->name }}</h1>
+
+                  <h3>{{ $car->year }}</h3>
+
+                  <h2>{{ $car->color }}</h2>
+
+                  <h4>{{ $car->description }}</h4>
+              @endforeach
+          </body>
+          </html>
+
+3)  a. use Illuminate\Support\Facades\Route;
+       use Main\Http\Controllers\CarController;
+
+         Route::resource('/{id}', CarController::class);
+
+         Auth::routes();
+
+         Route::get('/home', [Main\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+       b. namespace Main\Models;
+
+            use Illuminate\Database\Eloquent\Factories\HasFactory;
+            use Illuminate\Database\Eloquent\Model;
+
+            class Car extends Model
+            {
+                use HasFactory;
+
+                protected $table = 'cars';
+
+                protected  $primaryKey = 'id';
+
+            //    public $timestamps = true;         (optional)
+            //
+            //    protected  $dateFormat = 'h:m:s';   (optional)
+            }
+
+       c. namespace Main\Http\Controllers;
+
+             use Main\Models\Car;
+             use Illuminate\Http\Request;
+
+             class CarController extends Controller
+             {
+                 public function index(Car $car)
+                      {
+                        ...
+                      }
+                   }
+
+
+----------------------------------------------------------------------------------
+
+
+16) RESOURCE CONTROLLERS
+
+!!! You must put views in a separate folder, like if you have a
+CarController create and put views in a 'cars' folder !!!
+
+Verb	      URI	                Action	        Route Name
+
+GET	        /cars	                index	        cars.index
+
+ public function index()
+    {
+
+        $cars = Car::all();
+        // $cars = Car::where('name', '=', 'Ford')
+        // ->get();   to get specific one
+
+        // $cars = Car::where('name', '=', 'Ford')
+        // ->first();
+
+        // $cars = Car::chunk(2, function ($cars) {
+        //      foreach($cars as $car){
+        //          print_r($car);
+        //      }
+        //  });
+
+        // $cars = Car::where('name', '=', 'BMW')
+        // ->firstOrFail();  throws ModelNotFoundException if not first
+
+        // $cars = Car::where('name', '=', 'BMW')
+        // ->findOrFail();  throws ModelNotFoundException if not found
+
+        // print_r(Car::all()->count());
+
+        // print_r(Car::sum('founded'));
+
+        // print_r(Car::avg('founded'));
+
+        return view('cars.index', [
+            'cars' => $cars
+        ]);
+    }
+
+index.blade.php
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,
+          minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    @foreach($cars as $car)
+        {{ $car->founded }}
+    @endforeach
+</body>
+</html>
+
+GET	        /cars/create	        create	        cars.create
+
+(inserting data): we basically need a form which will allow us insert data
+into input fields. Click on submit button and do something with it inside
+the store method (next below)
+
+car.blade.php:
+
+        If you'll click on it, you'll see that endpoint changes to: cars/create
+           <div>
+                <a href="cars/create">    (creates a button, in index.blade.php)
+                    Add a new photo &arr;
+                </a>
+            </div>
+
+        we also need to create a view: create.blade.php, where we'll create a
+        our form:
+            <form action="" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="name">
+                <input type="file" name="year">
+                <input type="file" name="color">
+                <input type="file" name="description">
+                <button type="submit">Upload File</button>
+            </form>
+
+CarController:
+
+        public function create(){
+
+             return view ('cars.create')  (cars, it's a folder name)
+
+        }               |
+                        |
+POST	    /cars	    |            store	        cars.store
+                       \/
+    public function store(Request $request) {
+
+    there are two ways to insert the data into database:
+
+    first way
+
+        $car = new Car;
+        $car->name = $request->input('name');
+        $car->year = $request->input('year');
+        $car->color = $request->input('color');
+        $car->description = $request->input('description');
+        $car->save();
+    }
+
+    second way, by passing array to a model:
+
+        $car = Car::create([                   if we'll use: $car = Car::make
+        'name' => $request->input('name'),            then we'll have to save
+        'founded' => $request->input('founded'),             it: $car->save()
+        'description' => $request->input('description')
+        ]);
+
+        Every time you pass an array into a new model, all the properties
+        we have here (in a second method ) needs to be approved from a mass
+        assignment in our model.
+        So, you must add $fillable property into Car.php in order for a
+        second way to work !!!  (see below)
+
+Car.php
+
+        namespace Main\Models;
+
+        use Illuminate\Database\Eloquent\Factories\HasFactory;
+        use Illuminate\Database\Eloquent\Model;
+
+        class Car extends Model
+        {
+            use HasFactory;
+
+            protected $table = 'cars';
+
+            protected $primaryKey = 'id';
+
+            public $timestaps = true;
+
+            public $dateFormat = 'h:m:s';
+
+            protected $fillable = ['name', 'founded', 'description'];
+        }
+
+
+GET	        /cars/{car}	        show	        cars.show
+
+Show method shows one particular resource (item)
+
+           public function show($id) {
+
+                $car = Car::find($id);
+
+                dd($car->engines);
+
+                return view('image')->with('car', $car);
+            }
+
+GET	        /cars/{car}/edit	edit	        cars.edit
+
+index.blade.php
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,
+           minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+{{ $cars }}
+    @foreach($cars as $car)
+        <a href="cars/{{ $car->id }}/edit">Edit Item</a>
+        {{ $car->founded }}
+    @endforeach
+<a href="cars/create">send</a>
+</body>
+</html>
+
+edit.blade.php
+
+        <!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport"
+                  content="width=device-width, user-scalable=no, initial-scale=1.0,
+                  maximum-scale=1.0, minimum-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>Document</title>
+        </head>
+        <body>
+        <form action="/cars/{{ $car->id }}" method="POST">
+            @csrf
+            @method('PUT')
+            <input type="text" name="name" value="{{ $car->name }}"><br>
+            <input type="text" name="year" value="{{ $car->year }}"><br>
+            <input type="text" name="color" value="{{ $car->color }}"><br>
+            <input type="text" name="description" value="{{ $car->description }}"><br>
+            <button type="submit">Press</button>
+        </form>
+        </body>
+        </html>
+
+CarController.php
+
+             public function edit($id)
+             {
+             // find() method returns a collection, that's why
+             // we need to loop over it. And if we add first()
+             // method to it, we'll return an object so we
+             // don't have to loop over it in the ui
+                 $car = Car::find($id)->first();
+
+                 return view('cars.edit')->with('car', $car);
+             }                    |
+                                  |
+                                  |
+                                  \/
+PUT/PATCH	/cars/{car}	        update	        cars.update
+
+         $car = Car::where('id', $id)->update([
+                'name' => $request->input('name'),
+                'year' => $request->input('year'),
+                'color' => $request->input('color'),
+                'description' => $request->input('description')
+            ]);
+         return redirect('/cars');
+
+DELETE	    /cars/{car}	        destroy	        cars.destroy
+
+index.blade.php
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,
+          minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+@foreach($cars as $car)
+    {{ $car->name }}
+    <a href="cars/{{ $car->id }}/edit">kol</a>
+    <form action="cars/{{ $car->id }}" method="POST">
+        @csrf
+        @method('delete')
+        <button type="submit">Delete</button>
+    </form>
+@endforeach
+</body>
+</html>
+
+CarController.php
+
+    public function destroy($id)
+    {
+
+        $car = Car::find($id)->first();
+
+        $car->delete();
+
+        return redirect('/cars');
+    }
+
+
+-----------------------------------------------------------------------------------
+
+
+17) SERIALIZATION
+
+                                toArray()
+
+CarController.php
+
+    public function index()
+    {
+
+        $cars = Car::all()->toArray();
+        var_dump($cars);               // remove it when don't need it
+        return view('cars.index', [
+            'cars' => $cars
+        ]);
+    }
+
+
+index.blade.php
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,
+          minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+@foreach($cars as $car)
+    {{ $car['name'] }}
+@endforeach
+
+</body>
+</html>
+
+Car.php
+
+If you want to hide certain columns you can add:
+
+protected $hidden = ['password', 'code']
+
+or if you want to display info you can add:
+
+protected $visible = ['name', 'description']
+
+or any other sensitive info in the model, so they wouldn't be displayed
+
+
+                                toJson()
+
+CarController.php
+
+    public function index()
+    {
+
+        $cars = Car::all()->toJson();
+         $cars = json_decode($cars);
+        var_dump($cars);               // remove it when don't need it
+        return view('cars.index', [
+            'cars' => $cars
+        ]);
+    }
+
+
+index.blade.php
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,
+          minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+@foreach($cars as $car)
+    {{ $car['name'] }}
+@endforeach
+
+</body>
+</html>
+
+
+Car.php
+
+If you want to hide certain columns you can add:
+
+protected $hidden = ['password', 'code']
+
+or if you want to display info you can add:
+
+protected $visible = ['name', 'description']
+
+or any other sensitive info in the model, so they wouldn't be displayed
+
+
+-----------------------------------------------------------------------------------
+
+
+18) UPLOADING IMAGE
+
+Intervention Image Package - is a nice image library !!!
+
+       // dd($request->file());
+
+//        $test = $request->file('image')->guessExtension();
+//        dd($test);
+
+//        $request->validate([
+//            'name' => 'required',
+//            'founded' => 'required|integer|min:0|max:2021',
+//            'description' => 'required',
+//            'image' => 'required|mimes:jpg,png,jpeg|max:5048'
+//        ]);
+
+//        $newImageName = time() . '-' . $request->name . '.' .
+//            $request->image->extension();
+//
+//       $request->image->move(public_path('images'), $newImageName);
+//
+//        $car = Car::create([
+//            'name' => $request->input('name'),
+//            'founded' => $request->input('founded'),
+//            'description' => $request->input('description'),
+//            'image_path' => $newImageName
+//        ]);
+
+
+
+------------------------------------------------------------------------------------
+                I                       I                         I
+                I                       I                         I
+                I                       I                         I
+------------------------------------------------------------------------------------
+
+
+
+
+PRACTICE EVERY DAY PROJECTS:
+
+
+Todos App
+
+Up to video 10 is setting up laravel, displaying list of names with bootstrap
+Clicking on button & displaying with show method properties (video 11 Esy.Ln)
+Creating data with factories and seeders (video 8 Esy.Ln & Arab Guy Ecommce)
+Creating standard vies structure with @extends & @yield (video 12 Easy Lrn)
+Saving data in the database (create & store) (video 13 Easy Learn)
+Validation of the data (video 14 Easy Learn)
+Updating data (edit & update) (video 15 Easy Learn)
+
+
+CMS App
+
+Hiding content from unauthorized users with: @auth, @else and
+                                            @endauth (vid 21)
+Named routes (video 22 Easy Learn)
+Creating Request folder for validations, request object (video 24)
+Very important!!! lesson regarding lots of functionality (video 25)
+Dealing with Javascript functionality (video 26)
+Storing image (video 28)
+Displaying image (video 29)
+Soft delete, custom migration for production (video 30)
+Trick with functions, with route model bounding (video 31)
+Very important!!! Difference between function & proprety (video 36)
+Partials (video 38)
+Creating administrator (video 42)
+!!! End of creating CMS backend !!! (video 44)
+
+
+TOPICS
+
+Guard - it tells Laravel that it has to use its login system or
+         authentication system for particular user or a model
+Middleware
+Sessions
+Authentication
+Authorization
+Gates - opredelyayet kakie prava mojno dat polzovatelyu
+Policies
+Queues
+Events
+Components
+Providers
+Broadcasting
+Services - you can access from multiple places in application your service
+Route Model Binding
+Factories & Seeders
+
+
+
+LARAVEL YOUTUBE CHANNELS
+
+AngelJay Academy - Blade Layouts
+JustSteveKing
+Laravel
+Sharma Coder
+Paris Nakita Kejser
+Laravel Daily
+Online Web Tutor
+Code Step By Step
+Code With Dary
+Coder's Tape
+Bitfumes
+Surfside Media
+Vaxa Code
+Easy Learning
+Laratips
+Penguin Digital
+Amitav Roy
+Training with Rony
+devdojo
+CodingWithStef
+Web Tech Knowledge - nice projects
+Code Fisher
+Andrew Schmelyun
+Build Real Main
+Kodiary Technologies
+BPKodes
+Funda Of Web IT
+Prakash Bhandari  (keyboard ASMR)
+Codecourse
+QiroLab
+Clean Code Studio
+Acadea.io
+WebDevMatics
+rdavydov
+
+----------------------------------------------------------------------------------------
+
+OTHER GREAT YOUTUBE PROGRAMING CHANNELS
+
+LearnWebCode
+The Lean Programmer

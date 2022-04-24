@@ -114,6 +114,16 @@ class SubCategoryController extends Controller
 
 
 
+    public function GetSubSubCategory($subcategory_id){
+
+        $subsubcat = SubSubcategory::where('subcategory_id', $subcategory_id)
+        ->orderBy('subsubcategory_name_en', 'ASC')->get();
+        return json_encode($subsubcat);
+
+    }
+
+
+
     public function SubSubCategoryStore(Request $request){
 
         SubSubcategory::insert([               
@@ -173,13 +183,5 @@ class SubCategoryController extends Controller
 
     }
 
-
-
-
-    public function GetSubSubCategory($subcategory_id){
-
-
-
-    }
 
 }

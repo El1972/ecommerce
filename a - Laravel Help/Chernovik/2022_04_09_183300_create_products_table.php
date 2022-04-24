@@ -37,9 +37,9 @@ return new class extends Migration
             $table->string('short_descp_fr');
             $table->string('long_descp_en');
             $table->string('long_descp_fr');
+            $table->string('product_thumbnail');
             $table->integer('hot_deals')->nullable();
             $table->integer('featured')->nullable();
-            $table->string('product_thumbnail');
             $table->integer('special_deals')->nullable();
             $table->integer('special_offers')->nullable();
             $table->integer('status')->default(0);
