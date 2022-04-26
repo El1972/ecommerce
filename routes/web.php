@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\Frontend\LanguageController;
 
 
 /*
@@ -100,6 +101,20 @@ Route::prefix('product')->group(function(){
     Route::get('/delete/{id}',[ProductController::class, 'ProductDelete'] )->name('product-delete');
 
 });
+
+
+// Slider
+
+
+// Frontend All Routes
+
+// Multi Language All Routes
+
+Route::get('/language/english',[LanguageController::class, 'English'] )->name('english.language');
+Route::get('/language/french',[LanguageController::class, 'French'] )->name('french.language');
+
+
+
 
 
 

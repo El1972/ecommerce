@@ -15,5 +15,7 @@ table (data is not showing up)-->
 
 <!-- Continue from 6:48 of 148th video in chapter 9 (images)-->
 
-<!-- Redo/Start from 192 video of chapter 14 and continue -->
+<!-- Finish all the multi images problems in admin section -->
+
+<!-- Finish translating to french all the words -->
 </html>
