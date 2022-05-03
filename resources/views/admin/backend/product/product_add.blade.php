@@ -353,7 +353,7 @@
                                         <div class="controls">
                                             <textarea name="short_descp_en" id="textarea"
                                             class="form-control"
-                                            required placeholder="Textarea text"></textarea>
+                                            required></textarea>
                                         </div>
                                     </div>
                 
@@ -364,7 +364,7 @@
                                         <div class="controls">
                                             <textarea name="short_descp_fr" id="textarea"
                                             class="form-control"
-                                            required placeholder="Textarea text"></textarea>
+                                            required></textarea>
                                         </div>
                                     </div>
                 
@@ -386,9 +386,7 @@
                                     <div class="form-group">
                                         <h5>Long Description English<span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <textarea id="editor1" name="long_descp_en" rows="10" cols="80">
-                                                Long Description English
-						                    </textarea>
+                                            <textarea id="editor1" name="long_descp_en" rows="10" cols="80"></textarea>
                                         </div>
                                     </div>
                 
@@ -397,9 +395,7 @@
                                     <div class="form-group">
                                         <h5>Long Description French<span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <textarea id="editor2" name="long_descp_fr" rows="10" cols="80">
-                                                Long Description French
-						                    </textarea>
+                                            <textarea id="editor2" name="long_descp_fr" rows="10" cols="80"></textarea>
                                         </div>
                                     </div>
                 

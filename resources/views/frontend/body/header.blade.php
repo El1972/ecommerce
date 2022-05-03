@@ -158,7 +158,11 @@
             <div class="navbar-collapse collapse" id="mc-horizontal-menu-collapse">
               <div class="nav-outer">
                 <ul class="nav navbar-nav">
-                  <li class="active dropdown yamm-fw"> <a href="{{ url('/') }}" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a> </li>
+                  <li class="active dropdown yamm-fw"> <a href="{{ url('/') }}" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">
+                    @if(session()->get('language') == 'french') Domicile 
+                    @else Home
+                    @endif
+                  </a> </li>
 
                 {{-- ---------------------- Categories ----------------------- --}}
 
@@ -169,7 +173,9 @@
         @foreach ($categories as $category)
 
           <li class="dropdown yamm mega-menu"> <a href="home.html" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">
-            {{ $category->category_name_en }}
+            @if(session()->get('language') == 'french') {{ $category->category_name_fr }} 
+            @else {{ $category->category_name_en }}
+            @endif
           </a>
             <ul class="dropdown-menu container">
               <li>
@@ -186,7 +192,9 @@
 
                     <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
                       <h2 class="title">
-                        {{ $subcategory->subcategory_name_en }}
+                        @if(session()->get('language') == 'french') {{ $subcategory->subcategory_name_fr }}
+                        @else {{ $subcategory->subcategory_name_en }}
+                        @endif
                       </h2>
 
                 {{-- ---------------------- SubSubCategories ----------------------- --}}
@@ -201,7 +209,9 @@
                       <ul class="links">
                         <li>
                           <a href="#">
-                        {{ $subsubcategory->subsubcategory_name_en }}  
+                            @if(session()->get('language') == 'french') {{ $subsubcategory->subsubcategory_name_fr }}
+                            @else {{ $subsubcategory->subsubcategory_name_en }}
+                            @endif  
                         </a>
                        </li>
                       </ul>
